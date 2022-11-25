@@ -13,13 +13,21 @@
   }
 
   let options: { [k in keyof typeof FauxChoices]?: any } = {
-    itemName: "aa",
+    itemName: "",
     income: {
       value: "",
       unit: "hr",
     },
   };
 
+  onMount(() => {
+    if (location.search) {
+      options = {
+        ...options,
+        itemName: new URLSearchParams(location.search).get("n") ?? ""
+      }
+    }
+  });
   import { fade, fly } from "svelte/transition";
 
   let uiState = {
@@ -112,7 +120,7 @@
         class="minimalUnderline"
         bind:value={options.itemName}
         type="text"
-        placeholder="Enter the item here"
+        placeholder="enter the item name"
         disabled={uiState.showResult || uiState.isCalculating}
       />
     </h1>

@@ -10,6 +10,7 @@
     sale,
     need,
     want,
+    price,
   }
 
   let options: { [k in keyof typeof FauxChoices]?: any } = {
@@ -77,18 +78,37 @@
     return moneyLost;
   }
 
-  function shouldIBuyIt() {
+  function handleCalculateButton() {
     if (uiState.isCalculating) return;
     uiState.showOptions = false;
     uiState.isCalculating = true;
 
-    // TODO: Add actual financial advice here.
-    // lol
-
     setTimeout(() => {
-      uiState.showResult = true;
-      uiState.isCalculating = false;
-    }, 1000);
+      if (TopSecretFinancialAdvice()) {
+        uiState.showResult = true;
+        uiState.isCalculating = false;
+      }
+    }, 1000 + Math.random() * 2000);
+  }
+
+  function giveBadFinancialAdvice() {
+    if (options.price && Math.random() < 0.05)
+      return `It's only ${uiState.currencyUnit}${options.price}!!!`;
+    if (options.price <= 6.0)
+      return "It's only about the price of a cup of coffee";
+    if (options.price <= 20)
+      return "It's only the price of a meal or two, you can starve for a bit";
+    if (options.sale) return "It's on sale, after all";
+    if (options.want) return "You might not need it, but treat yourself.";
+
+    let itemName = options.itemName.trim();
+    let choices = [
+      "Well who else is going to get you a " + itemName,
+      "Do it",
+      itemName + ".",
+    ];
+
+    return choices[Math.floor(Math.random() * choices.length)];
   }
 
   onMount(() => {
@@ -108,6 +128,7 @@
   import dayjs_duration from "dayjs/plugin/duration";
   import dayjs_relativeTime from "dayjs/plugin/relativeTime";
   import Question from "./Question.svelte";
+  import TopSecretFinancialAdvice from "./TopSecretFinancialAdvice";
   dayjs.extend(dayjs_duration);
   dayjs.extend(dayjs_relativeTime);
 </script>
@@ -192,6 +213,7 @@
             type="number"
             min="0"
             placeholder="Price"
+            bind:value={options.price}
             class="input input-bordered w-full max-w-xs"
           />
         </div>
@@ -267,7 +289,7 @@
             transition:fade
             class="btn btn-lg"
             class:loading={uiState.isCalculating}
-            on:click={shouldIBuyIt}
+            on:click={handleCalculateButton}
             >{#if !uiState.isCalculating}Should I buy it{/if}</button
           >
         </span>
@@ -287,6 +309,8 @@
   {#if uiState.showResult}
     <div transition:fly={{ delay: 800, y: 300 }} class="mt-8">
       <h1>Yes.</h1>
+
+      <p>{giveBadFinancialAdvice()}</p>
 
       {#key uiState.elapsedTime}
         {#if uiState.elapsedTime && options.income.value}

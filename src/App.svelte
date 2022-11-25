@@ -52,6 +52,9 @@
         irresponsibility. That's on you.
       </p>
     </div>
+    <div class="md:place-self-center md:justify-self-end">
+      <a href="https://github.com/featherbear/shouldibuyit/blob/master/src/lib/TopSecretFinancialAdvice.ts" target="_blank">More about our AI</a>
+    </div>
   </footer>
 </section>
 

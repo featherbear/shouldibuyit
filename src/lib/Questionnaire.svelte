@@ -314,7 +314,7 @@
 
       {#key uiState.elapsedTime}
         {#if uiState.elapsedTime && options.income.value}
-          <p>
+          <p class="mt-4">
             This tool just took {dayjs
               .duration(uiState.elapsedTime, "s")
               .humanize()} of your life away.

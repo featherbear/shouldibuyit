@@ -24,8 +24,8 @@
     if (location.search) {
       options = {
         ...options,
-        itemName: new URLSearchParams(location.search).get("n") ?? ""
-      }
+        itemName: new URLSearchParams(location.search).get("n") ?? "",
+      };
     }
   });
   import { fade, fly } from "svelte/transition";
@@ -113,7 +113,7 @@
 </script>
 
 <div class="client">
-  <div class="pb-8">
+  <div class="pb-8 mt-4">
     <h1>
       <span>Should I buy a</span>
       <input
@@ -260,22 +260,28 @@
   {/if}
 
   {#if options.itemName}
-    {#if uiState.isCalculating || uiState.showOptions !== false}
-      <button
-        transition:fade
-        class="btn btn-lg"
-        class:loading={uiState.isCalculating}
-        on:click={shouldIBuyIt}
-        >{#if !uiState.isCalculating}Should I buy it{/if}</button
-      >
-    {/if}
+    <div class="controlButtons">
+      {#if uiState.isCalculating || uiState.showOptions !== false}
+        <span>
+          <button
+            transition:fade
+            class="btn btn-lg"
+            class:loading={uiState.isCalculating}
+            on:click={shouldIBuyIt}
+            >{#if !uiState.isCalculating}Should I buy it{/if}</button
+          >
+        </span>
+      {/if}
 
-    {#if uiState.showOptions === null}
-      <button
-        class="btn btn-outline btn-sm md:btn-md lg:btn-lg"
-        on:click={() => (uiState.showOptions = true)}>Refine AI</button
-      >
-    {/if}
+      {#if uiState.showOptions === null}
+        <span>
+          <button
+            class="btn btn-outline btn-sm md:btn-md lg:btn-lg"
+            on:click={() => (uiState.showOptions = true)}>Refine AI</button
+          >
+        </span>
+      {/if}
+    </div>
   {/if}
 
   {#if uiState.showResult}
@@ -306,6 +312,8 @@
   .minimalUnderline {
     text-align: center;
 
+    max-width: 100%;
+
     border: none;
     outline: 0;
 
@@ -316,6 +324,14 @@
     }
     &:focus {
       border-bottom: 2px solid grey;
+    }
+  }
+
+  @media screen and (orientation: portrait) {
+    .controlButtons > * {
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 1em;
     }
   }
 </style>

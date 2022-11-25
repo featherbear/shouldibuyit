@@ -3,7 +3,7 @@
 </script>
 
 <section>
-  <main>
+  <main class="pb-8">
     <Questionnaire />
   </main>
 
@@ -30,7 +30,7 @@
     </div>
   </footer> -->
   <footer
-    class="footer px-10 py-4 border-t bg-base-200 text-base-content border-base-300"
+    class="footer px-5 py-4 border-t bg-base-200 text-base-content border-base-300"
   >
     <div class="items-center grid-flow-col">
       <svg
@@ -64,9 +64,12 @@
     width: 100%;
 
     flex-direction: column;
+
+    overflow-x: hidden;
+
     > main {
       flex: 1;
-      max-width: 1280px;
+      max-width: min(90%, 1280px);
       display: flex;
       flex-direction: column;
       place-self: center;

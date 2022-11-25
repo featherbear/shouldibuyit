@@ -330,6 +330,13 @@
 </div>
 
 <style lang="scss">
+.label {
+  justify-content: start;
+  input + span {
+    margin-left: 10px;
+  }
+}
+
   .client {
     text-align: center;
   }

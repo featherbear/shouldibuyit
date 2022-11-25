@@ -101,7 +101,7 @@
     if (options.sale) return "It's on sale, after all";
     if (options.want) return "You might not need it, but treat yourself.";
 
-    let itemName = options.itemName.trim();
+    let itemName = options.itemName?.trim();
     let choices = [
       "Well who else is going to get you a " + itemName,
       "Do it",
@@ -116,7 +116,7 @@
       /**
        * Count time elapsed since an item name was added
        */
-      if (!!options.itemName) {
+      if (!!options.itemName?.trim()) {
         uiState.elapsedTime++;
       } else {
         uiState.elapsedTime = 0;
@@ -147,7 +147,7 @@
     </h1>
   </div>
 
-  {#if options.itemName && uiState.showOptions}
+  {#if options.itemName?.trim() && uiState.showOptions}
     <Question>
       <div class="form-control" transition:fade>
         <label class="label">
@@ -281,7 +281,7 @@
     </Question>
   {/if}
 
-  {#if options.itemName}
+  {#if options.itemName?.trim()}
     <div class="controlButtons">
       {#if uiState.isCalculating || uiState.showOptions !== false}
         <span>
